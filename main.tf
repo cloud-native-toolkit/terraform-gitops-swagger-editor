@@ -3,6 +3,7 @@ locals {
   bin_dir       = module.setup_clis.bin_dir
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
   service_url   = "http://${local.name}.${var.namespace}"
+  cluster_type = var.cluster_type == "kubernetes" ? "kubernetes" : "openshift"
   values_content = {
     clusterType = local.cluster_type
     ingressSubdomain = var.cluster_ingress_hostname

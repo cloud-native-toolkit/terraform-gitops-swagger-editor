@@ -75,3 +75,12 @@ variable "kubeseal_namespace" {
 
 variable "cp_entitlement_key" {
 }
+
+variable "cluster_ingress_hostname" {
+  type        = string
+  description = "Ingress hostname of the cluster."
+}
+
+variable "cluster_type" {
+  description = "The cluster type (openshift or kubernetes)"
+}
