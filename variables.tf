@@ -94,8 +94,10 @@ variable "tls_secret_name" {
 variable "cluster_ingress_hostname" {
   type        = string
   description = "Ingress hostname of the cluster."
+  default     = ""
 }
 
 variable "cluster_type" {
   description = "The cluster type (openshift or kubernetes)"
+  default     = "openshift"
 }

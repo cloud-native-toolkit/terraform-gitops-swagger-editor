@@ -1,4 +1,4 @@
-module "gitops_module" {
+module "gitops_swaggereditor" {
   source = "./module"
 
   gitops_config = module.gitops.gitops_config
