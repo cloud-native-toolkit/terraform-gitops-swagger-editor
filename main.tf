@@ -4,6 +4,10 @@ locals {
   yaml_dir      = "${path.cwd}/.tmp/${local.name}/chart/${local.name}"
   service_url   = "http://${local.name}.${var.namespace}"
   values_content = {
+    clusterType = local.cluster_type
+    ingressSubdomain = var.cluster_ingress_hostname
+    "sso.enabled" = var.enable_sso
+    tlsSecretName = var.tls_secret_name
   }
   layer = "services"
   type  = "base"
