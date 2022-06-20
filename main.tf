@@ -6,10 +6,12 @@ locals {
   service_url   = "http://${local.name}.${var.namespace}"
   cluster_type = var.cluster_type == "kubernetes" ? "kubernetes" : "openshift"
   values_content = {
+    swaggereditor = {
     clusterType = local.cluster_type
     ingressSubdomain = var.cluster_ingress_hostname
     "sso.enabled" = var.enable_sso
     tlsSecretName = var.tls_secret_name
+    }
   }
   layer = "services"
   type  = "base"
