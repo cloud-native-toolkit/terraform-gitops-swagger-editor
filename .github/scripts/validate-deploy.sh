@@ -45,6 +45,8 @@ find . -name "*"
 set -e
 
 validate_gitops_content "${NAMESPACE}" "${LAYER}" "${SERVER_NAME}" "${TYPE}" "${COMPONENT_NAME}" "values.yaml"
+validate_gitops_content "${NAMESPACE}" "${LAYER}" "${SERVER_NAME}" "${TYPE}" "${COMPONENT_NAME}" "values-${SERVER_NAME}.yaml"
+
 
 check_k8s_namespace "${NAMESPACE}"
 
