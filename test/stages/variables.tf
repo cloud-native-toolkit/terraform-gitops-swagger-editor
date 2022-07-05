@@ -75,3 +75,11 @@ variable "kubeseal_namespace" {
 
 variable "cp_entitlement_key" {
 }
+
+variable "cluster_ca_cert" {
+  type        = string
+  description = "The certificate authority for the cluster"
+}
+
+
+

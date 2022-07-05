@@ -1,0 +1,6 @@
+dependencies:
+- name: swaggereditor
+  repository: https://charts.cloudnativetoolkit.dev/
+  version: 2.1.0
+digest: sha256:5232a03097a44cf4e31698b713ba79b6b346b577ab102478d24d02d435f2e8ab
+generated: "2022-06-17T16:52:43.671219+05:30"
