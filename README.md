@@ -1,24 +1,5 @@
-# Starter kit for a Terraform GitOps module
-
-This is a Starter kit to help with the creation of Terraform modules. The basic structure of a Terraform module is fairly
-simple and consists of the following basic values:
-
-- README.md - provides a description of the module
-- main.tf - defines the logic for the module
-- variables.tf (optional) - defines the input variables for the module
-- outputs.tf (optional) - defines the values that are output from the module
-
-Beyond those files, any other content can be added and organized however you see fit. For example, you can add a `scripts/` directory
-that contains shell scripts executed by a `local-exec` `null_resource` in the terraform module. The contents will depend on what your
-module does and how it does it.
-
-## Instructions for creating a new module
-
-1. Update the title and description in the README to match the module you are creating
-2. Fill out the remaining sections in the README template as appropriate
-3. Implement your logic in the in the main.tf, variables.tf, and outputs.tf
-4. Use releases/tags to manage release versions of your module
-
+# Swagger Editor GitOps module
+Module to populate a gitops repository with the resources required to provision Swagger Editor.
 ## Software dependencies
 
 The module depends on the following software components:
@@ -44,16 +25,13 @@ This module makes use of the output from other modules:
 ## Example usage
 
 ```hcl-terraform
-module "dev_tools_argocd" {
-  source = "github.com/cloud-native-toolkit/terraform-tools-argocd.git"
-
-  cluster_config_file = module.dev_cluster.config_file_path
-  cluster_type        = module.dev_cluster.type
-  app_namespace       = module.dev_cluster_namespaces.tools_namespace_name
-  ingress_subdomain   = module.dev_cluster.ingress_hostname
-  olm_namespace       = module.dev_software_olm.olm_namespace
-  operator_namespace  = module.dev_software_olm.target_namespace
-  name                = "argocd"
+module "swagger_editor" {
+  source = "https://github.com/cloud-native-toolkit/terraform-gitops-swagger-editor.git"
+  gitops_config = module.gitops.gitops_config
+  git_credentials = module.gitops.git_credentials
+  server_name = module.gitops.server_name
+  namespace = module.gitops_namespace.name
+  kubeseal_cert = module.gitops.sealed_secrets_cert
 }
 ```
 
@@ -205,19 +183,6 @@ In order to simplify the process of managing the gitops repository structure and
 
 The yaml used to define the resources required to deploy the component can be defined as kustomize scripts, a helm chart, or as raw yaml in the directory. In most cases we use helm charts to simplify the required input configuration.
 
-## Submitting changes
-
-1. Fork the module git repository into your personal org
-2. In your forked repository, add the following secrets (note: if you are working in the repo in the Cloud Native Toolkit, these secrets are already available):
-    - __IBMCLOUD_API_KEY__ - an API Key to an IBM Cloud account where you can provision the test instances of any resources you need
-    - __GIT_ADMIN_USERNAME__ - the username of a git user with permission to create repositories
-    - __GIT_ADMIN_TOKEN__ - the personal access token of a git user with permission to create repositories in the target git org
-    - __GIT_ORG__ - the git org where test GitOps repos will be provisioned
-3. Create a branch in the forked repository where you will do your work
-4. Create a [draft pull request](https://github.blog/2019-02-14-introducing-draft-pull-requests/) in the Cloud Native Toolkit repository for your branch as soon as you push your first change. Add labels to the pull request for the type of change (`enhancement`, `bug`, `chore`) and the type of release (`major`, `minor`, `patch`) to impact the generated release documentation.
-5. When the changes are completed and the automated checks are running successfully, mark the pull request as "Ready to review".
-6. The module changes will be reviewed and the pull request merged. After the changes are merged, the automation in the repo create a new release of the module.
-
 ## Development
 
 ### Adding logic and updating the test
@@ -227,3 +192,5 @@ The yaml used to define the resources required to deploy the component can be de
 3. If the module has dependencies on other modules, add them as `test/stages/stage1-xxx.tf` and reference the output variables as variable inputs.
 4. Review the validation logic in `.github/scripts/validate-deploy.sh` and update as appropriate.
 5. Push the changes to the remote branch and review the check(s) on the pull request. If the checks fail, review the log and make the necessary adjustments.
+
+For more details on development and contribution,refer to https://github.com/cloud-native-toolkit/automation-modules/tree/main/md
